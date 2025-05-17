@@ -48,7 +48,7 @@ def scan_directory_for_modules(directory):
                         mods = extract_modules_from_code(code)
                         all_modules.extend(mods)
                 except Exception as e:
-                    print(f"failed to read {path}: {e}")
+                    print(f"⚠️ failed to read {path}: {e}")
     return all_modules
 
 def get_scripts(project_type):
@@ -77,12 +77,12 @@ def get_scripts(project_type):
         return {"start": "node index.js"}
 
 if __name__ == "__main__":
-    src_dir = "./"
+    main_dir = "./"
     project_type = "next-ts"
 
-    found_modules = scan_directory_for_modules(src_dir)
+    found_modules = scan_directory_for_modules(main_dir)
     valid_modules = sorted(set(m for m in found_modules if is_valid_npm_package(m)))
-    print(f"modules: {valid_modules}")
+    print(f"📦 valid modules: {valid_modules}")
 
     package_json = {
         "name": "auto-generated",
@@ -95,4 +95,4 @@ if __name__ == "__main__":
 
     with open("package.json", "w", encoding="utf-8") as f:
         json.dump(package_json, f, indent=2, ensure_ascii=False)
-    print("package.json generated")
+    print("✅ package.json generated successfully")
